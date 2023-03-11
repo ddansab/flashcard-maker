@@ -1,13 +1,15 @@
 ## How To setup
-- open `terminal`
+- Click `<> Code` dropdown above, and select `Download Zip`
+- Extract the zip wherever you want on your computer. You can even leave it in Downloads if you want.
 
-<!-- install pip -->
-- curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-- python3 get-pip.py
-
-<!-- install dependencies -->
-- pip3 install googletrans==3.1.0a0
-- pip3 install pinyin
+- Open `terminal`
+- Copy/Paste the 4 following 4 lines in order:
+    <!-- install pip -->
+    - `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
+    - `python3 get-pip.py`
+    <!-- install dependencies -->
+    - `pip3 install googletrans==3.1.0a0`
+    - `pip3 install pinyin`
 
 ## How to Use
 - Paste or input your new characters into the `starter_file.txt` file 
@@ -16,8 +18,9 @@
     - type `cd`, space `/path/to/folder` OR:
     - type `cd`, space, then drag the folder from your filefinder into your terminal
 - Once inside the correct directory, just type `python3 flashcard-maker.py`
+- Follow the prompts
 - ...
 - ...
 - Profit
 
-You can change the `starter_file.txt` file as many times as you want, but *ONLY CHANGE THE STARTER FILE*
+I haave some characters already in the starter file just to test functionality on your machine. You can change the `starter_file.txt` file as many times as you want, but **ONLY CHANGE THE STARTER FILE**
