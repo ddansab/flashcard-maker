@@ -1,5 +1,5 @@
 ## How To setup
-- Click `<> Code` dropdown above, and select `Download Zip`
+- Click the `<> Code` dropdown above, and select `Download Zip`
 - Extract the zip wherever you want on your computer. You can even leave it in Downloads if you want.
 
 - Open `terminal`
@@ -23,4 +23,4 @@
 - ...
 - Profit
 
-I haave some characters already in the starter file just to test functionality on your machine. You can change the `starter_file.txt` file as many times as you want, but **ONLY CHANGE THE STARTER FILE**
+I have some characters already in the starter file just to test functionality on your machine. You can change the `starter_file.txt` file as many times as you want, but **ONLY CHANGE THE STARTER FILE**
