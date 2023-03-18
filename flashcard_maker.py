@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 from googletrans import Translator
-import pinyin
+from pypinyin import Style, pinyin
 from pathlib import Path
 import random
+from help_functions import getSubList
 
 while True:
     fName = input("Choose a new filename (no special characters): ").replace(" ", "_")
@@ -24,20 +27,22 @@ def introStuff(fileName, categoryName):
 with open('starter_file.txt') as werdz:
     lines = werdz.readlines()
 
+
 # loop through the file
 def getTheWerdz():
     wait = '.'
+
     for line in lines:
         # pull character
         transSF = line.strip()
         
         transEN = translator.translate(transSF, dest='en')
         transLF = translator.translate(transSF, dest='zh-tw')
-        transPY = pinyin.get(transSF, format='numerical')
-    
+        transPY = pinyin(transSF, style=Style.TONE3, heteronym=True)
+        tp = getSubList(transPY, transSF)
         f = open('{}_pleco.txt'.format(fName), 'a')
-        f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, transPY, transEN.text))
-        
+        f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, tp, transEN.text))
+    
         print(wait)
         wait += '.'
 
