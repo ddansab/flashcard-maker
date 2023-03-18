@@ -19,7 +19,7 @@
 - Navigate to the `/flashcard_maker` directory within your terminal
     - type `cd`, space `/path/to/folder` OR:
     - type `cd`, space, then drag the folder from your filefinder into your terminal
-- Once inside the correct directory, just type `python3 flashcard-maker.py`
+- Once inside the correct directory, just type `python3 flashcard_maker.py`
 - Follow the prompts
 - ...
 - ...
