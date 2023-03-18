@@ -12,7 +12,6 @@
     - `python3 get-pip.py`
     <!-- install dependencies -->
     - `pip3 install googletrans==3.1.0a0`
-    - `pip3 install pypinyin`
 
 ## How to Use
 - Paste or input your new characters into the `starter_file.txt` file 
@@ -21,7 +20,7 @@
     - type `cd`, space `/path/to/folder` OR:
     - type `cd`, space, then drag the folder from your filefinder into your terminal
 - Once inside the correct directory, just type `python3 flashcard-maker.py`
-- Follow the prompts. If any of your charaters have multiple pronounciations, you'll need to pick the correct one
+- Follow the prompts
 - ...
 - ...
 - Profit

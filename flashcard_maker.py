@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
 from googletrans import Translator
-from pypinyin import Style, pinyin
 from pathlib import Path
 import random
-from help_functions import getSubList
 
 while True:
     fName = input("Choose a new filename (no special characters): ").replace(" ", "_")
@@ -35,13 +33,12 @@ def getTheWerdz():
     for line in lines:
         # pull character
         transSF = line.strip()
-        
         transEN = translator.translate(transSF, dest='en')
         transLF = translator.translate(transSF, dest='zh-tw')
-        transPY = pinyin(transSF, style=Style.TONE3, heteronym=True)
-        tp = getSubList(transPY, transSF)
+        transPY = translator.translate(line, dest='zh-cn')
+    
         f = open('{}_pleco.txt'.format(fName), 'a')
-        f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, tp, transEN.text))
+        f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, transPY.pronunciation, transEN.text))
     
         print(wait)
         wait += '.'
@@ -52,6 +49,6 @@ def doTheThing():
 
 doTheThing()
 print("==========================")
-print("All done! You can find `{}_pleco.txt` inside: {}".format(fName, Path.cwd()))
+print("All done! You can find `{}_pleco.txt` inside your {} folder.".format(fName, Path.cwd()))
 print("Just Teams or email it to yourself, and upload it into Pleco.")
 print("=========================")
