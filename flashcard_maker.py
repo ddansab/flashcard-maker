@@ -21,17 +21,27 @@ def introStuff(fileName, categoryName):
         w = open('{}_pleco.txt'.format(fileName), 'w')
         w.write("//{}\n".format(categoryName))
 
+def zhengLongShuo():
+   with open(r'starter_file.txt', 'r') as werdz:
+      data = werdz.read()
+      data = data.replace(", ", "\n")
+
+   with open(r'starter_file.txt', 'w') as werdz:
+      werdz.write(data)
+
+
+zhengLongShuo()
+
 # get the characters from file
 with open('starter_file.txt') as werdz:
     lines = werdz.readlines()
-
 
 # loop through the file
 def getTheWerdz():
     wait = '.'
 
     for line in lines:
-        # pull character
+	# pull character
         transSF = line.strip()
         transEN = translator.translate(transSF, dest='en')
         transLF = translator.translate(transSF, dest='zh-tw')
@@ -40,7 +50,7 @@ def getTheWerdz():
         f = open('{}_pleco.txt'.format(fName), 'a')
         f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, transPY.pronunciation, transEN.text))
     
-        print(wait)
+       	print(wait)
         wait += '.'
 
 def doTheThing():
