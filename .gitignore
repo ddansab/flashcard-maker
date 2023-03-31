@@ -1,4 +1,4 @@
 **/__pycache__/
 .DS_Store
-/new_files
-/starter
+/new_files/*
+
