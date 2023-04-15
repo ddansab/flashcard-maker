@@ -2,32 +2,39 @@
 
 from googletrans import Translator
 from pathlib import Path
+import os
 import random
 
 while True:
-    fName = input("Choose a new filename (no special characters): ").replace(" ", "_")
-    if fName: break
+    fName = input(
+        "Choose a new filename (no special characters): ").replace(" ", "_")
+    if fName:
+        break
 
 catName = input("Choose a category name for your new flashcards: ")
 translator = Translator()
 
 
 def introStuff(fileName, categoryName):
+    PATH = "new_files"
+    if not os.path.exists(PATH):
+        os.makedirs(PATH)
     num = random.randrange(1, 100)
     if not categoryName:
         w = open('new_files/{}_pleco.txt'.format(fileName), 'w')
-        w.write("//{} Monkey Butts\n".format(num))
+        w.write("//Lazy Category Namer {}\n".format(num))
     else:
         w = open('new_files/{}_pleco.txt'.format(fileName), 'w')
         w.write("//{}\n".format(categoryName))
 
-def zhengLongShuo():
-   with open(r'starter/starter_file.txt', 'r') as werdz:
-      data = werdz.read()
-      data = data.replace(", ", "\n")
 
-   with open(r'starter/starter_file.txt', 'w') as werdz:
-      werdz.write(data)
+def zhengLongShuo():
+    with open(r'starter/starter_file.txt', 'r') as werdz:
+        data = werdz.read()
+        data = data.replace(", ", "\n")
+
+    with open(r'starter/starter_file.txt', 'w') as werdz:
+        werdz.write(data)
 
 
 zhengLongShuo()
@@ -37,25 +44,30 @@ with open('starter/starter_file.txt') as werdz:
     lines = werdz.readlines()
 
 # loop through the file
+
+
 def getTheWerdz():
     wait = '.'
 
     for line in lines:
-	# pull character
+        # pull character
         transSF = line.strip()
         transEN = translator.translate(transSF, dest='en')
         transLF = translator.translate(transSF, dest='zh-tw')
         transPY = translator.translate(line, dest='zh-cn')
-    
+
         f = open('new_files/{}_pleco.txt'.format(fName), 'a')
-        f.write("{}[{}]\t{}\t{}\n".format(transSF, transLF.text, transPY.pronunciation, transEN.text))
-    
-       	print(wait)
+        f.write("{}[{}]\t{}\t{}\n".format(
+            transSF, transLF.text, transPY.pronunciation, transEN.text))
+
+        print(wait)
         wait += '.'
+
 
 def doTheThing():
     introStuff(fName, catName)
     getTheWerdz()
+
 
 doTheThing()
 print("==========================")
