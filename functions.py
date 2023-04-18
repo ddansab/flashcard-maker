@@ -24,6 +24,7 @@ def zhengLongShuo(werdz):
     split = werdz.split(',')
     return split
 
+#郑隆比周星大好得多。
 
 def newLineSplit(werdz):
     split = werdz.split('\n')
