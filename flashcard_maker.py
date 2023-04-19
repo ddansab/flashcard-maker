@@ -17,8 +17,10 @@ class App(customtkinter.CTk):
         super().__init__()
 
         # configure window
-        self.title("Quick Flashcard Maker")
+        self.title("又o又o Flashcard Maker")
         self.geometry(f"{1100}x{650}")
+        if platform == 'Darwin':
+            self.iconbitmap('yoyoyo.ico')
 
         # configure grid layout (4x4)
         self.grid_columnconfigure(1, weight=1)
@@ -31,7 +33,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
         self.logo_label = customtkinter.CTkLabel(
-            self.sidebar_frame, text="Flashcard Maker", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.sidebar_frame, text="又o又o", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
         self.appearance_mode_label = customtkinter.CTkLabel(
             self.sidebar_frame, text="UI Preference:", anchor="w")
