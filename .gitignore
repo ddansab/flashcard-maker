@@ -3,5 +3,4 @@
 /new_files/*
 /build/*
 /dist/*
-*.spec
-
+/venv/*
