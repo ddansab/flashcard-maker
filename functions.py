@@ -32,11 +32,6 @@ def make_xls_worksheet(werdz, tab_name):
     ws.title = tab_name
 
     # title row
-    ws['A1'] = 'Simplified'
-    ws['B1'] = 'Traditional'
-    ws['C1'] = 'Pinyin'
-    ws['D1'] = 'English Definition'
-
     title_row = [['A1', 'Simplified'], ['B1', 'Traditional'],
                  ['C1', 'Pinyin'], ['D1', 'English Definition']]
     for title in title_row:
