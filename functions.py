@@ -58,14 +58,16 @@ def make_xls_worksheet(werdz, tab_name):
 
 def zhengLongShuo(werdz):
     split = werdz.split(',')
-    return split
+    filtered_split = list(filter(None, split))
+    return filtered_split
 
 # 郑隆比周星大好得多。
 
 
 def newLineSplit(werdz):
     split = werdz.split('\n')
-    return split
+    filtered_split = list(filter(None, split))
+    return filtered_split
 
 
 def getTheWerdz(werdz, fName):

@@ -5,6 +5,7 @@ from sys import platform
 import tkinter
 import tkinter.messagebox
 import customtkinter
+import time
 
 from functions import getTheWerdz, introStuff, zhengLongShuo, newLineSplit, make_xls_worksheet
 
@@ -19,6 +20,7 @@ class App(customtkinter.CTk):
         # configure window
         self.title("又o又o Flashcard Maker")
         self.geometry(f"{1100}x{650}")
+        self.update_idletasks()
         if platform == 'Darwin':
             self.iconbitmap('yoyoyo.ico')
 
@@ -46,40 +48,39 @@ class App(customtkinter.CTk):
         # create category name field
         self.entry = customtkinter.CTkEntry(
             self, placeholder_text="Enter Category Name")
-        self.entry.grid(row=0, column=1, padx=(
-            20, 0), pady=(20, 20), sticky="nsew")
+        self.entry.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
 
         # create textbox
         self.textbox = customtkinter.CTkTextbox(
-            self, width=250, height=530, undo=True, font=('Calibri', 18))
-        self.textbox.grid(row=1, column=1, padx=(
-            20, 0), pady=0, sticky="nsew")
+            self, height=530, undo=True, font=('Calibri', 18))
+        self.textbox.grid(row=1, column=1, padx=20, pady=0, sticky="nsew")
 
         # create checkbox and switch frame
-        self.checkbox_slider_frame = customtkinter.CTkFrame(self)
+        self.checkbox_slider_frame = customtkinter.CTkFrame(
+            self, width=200, corner_radius=0)
         self.checkbox_slider_frame.grid(
-            row=0, column=2, padx=(20, 20), pady=(20, 0), rowspan=5, sticky="nsew")
+            row=0, column=2, rowspan=4, sticky="nsew")
         self.checkbox_label = customtkinter.CTkLabel(
             self.checkbox_slider_frame, text="File Type", font=customtkinter.CTkFont(size=16, weight="bold"))
         self.checkbox_label.grid(
-            row=0, column=0, pady=(20, 0), padx=20, sticky="n")
+            row=0, column=0, pady=(20, 0), padx=10, sticky="n")
         self.pleco_checkbox = customtkinter.CTkCheckBox(
             master=self.checkbox_slider_frame, text="Pleco")
-        self.pleco_checkbox.grid(row=1, column=0, pady=20, padx=20, sticky="n")
+        self.pleco_checkbox.grid(row=1, column=0, pady=20, padx=10, sticky="n")
         self.excel_checkbox = customtkinter.CTkCheckBox(
             master=self.checkbox_slider_frame, text="Excel")
         self.excel_checkbox.grid(
-            row=2, column=0, pady=(0, 20), padx=20, sticky="n")
-        self.sidebar_button_1 = customtkinter.CTkButton(
+            row=2, column=0, pady=(0, 20), padx=10, sticky="n")
+        self.create_file_button = customtkinter.CTkButton(
             self.checkbox_slider_frame, command=self.sidebar_button_event, text="Create File")
-        self.sidebar_button_1.grid(row=5, column=0, padx=20, pady=10)
+        self.create_file_button.grid(row=3, column=0, padx=20, pady=10)
+        self.see_files_button = customtkinter.CTkButton(
+            self.checkbox_slider_frame, command=self.see_file_event, text="Open Files")
+        self.see_files_button.grid(row=4, column=0, padx=20, pady=10)
         self.clear_button = customtkinter.CTkButton(
             self.sidebar_frame, command=self.clear_text_event, text="Clear Text", fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"))
         self.clear_button.grid(
             row=10, column=0, pady=(10, 20), padx=(30, 20), sticky="w")
-        self.see_files_button = customtkinter.CTkButton(
-            self.checkbox_slider_frame, command=self.see_file_event, text="Open Files")
-        self.see_files_button.grid(row=6, column=0, padx=20, pady=10)
 
         # set default values
         self.appearance_mode_optionemenu.set("System")
@@ -107,6 +108,17 @@ class App(customtkinter.CTk):
         global file_name
         file_name = filename.get_input()
         introStuff(file_name, self.entry.get())
+        self.progressbar = customtkinter.CTkProgressBar(
+            self.checkbox_slider_frame, width=100)
+        self.progressbar.grid(row=5, column=0, padx=10,
+                              pady=30, sticky="ew")
+        self.progressbar.set(0)
+        for x in range(60):
+            self.progressbar.update_idletasks()
+            self.progressbar.set(x/60)
+            time.sleep(0.025)
+        self.progressbar.grid_forget()
+        self.see_files_button.configure(text="See New Files")
 
     def sidebar_button_event(self):
         input = self.textbox.get("1.0", 'end-1c')
@@ -126,6 +138,17 @@ class App(customtkinter.CTk):
                 elif self.pleco_checkbox.get():
                     getTheWerdz(newLineSplit(input), file_name)
                 elif self.excel_checkbox.get():
+                    self.progressbar = customtkinter.CTkProgressBar(
+                        self.checkbox_slider_frame, width=100)
+                    self.progressbar.grid(row=5, column=0, padx=10,
+                                          pady=30, sticky="ew")
+                    self.progressbar.set(0)
+                    for x in range(60):
+                        self.progressbar.update_idletasks()
+                        self.progressbar.set(x/60)
+                        time.sleep(0.025)
+                    self.progressbar.grid_forget()
+                    self.see_files_button.configure(text="See New Files")
                     make_xls_worksheet(newLineSplit(input), cat)
             else:
                 getTheWerdz(zhengLongShuo(input), file_name)
