@@ -6,7 +6,7 @@ import tkinter
 import tkinter.messagebox
 import customtkinter
 
-from functions import getTheWerdz, introStuff, zhengLongShuo, newLineSplit
+from functions import getTheWerdz, introStuff, zhengLongShuo, newLineSplit, make_xls_worksheet
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("green")
@@ -63,12 +63,13 @@ class App(customtkinter.CTk):
             self.checkbox_slider_frame, text="File Type", font=customtkinter.CTkFont(size=16, weight="bold"))
         self.checkbox_label.grid(
             row=0, column=0, pady=(20, 0), padx=20, sticky="n")
-        self.checkbox_1 = customtkinter.CTkCheckBox(
+        self.pleco_checkbox = customtkinter.CTkCheckBox(
             master=self.checkbox_slider_frame, text="Pleco")
-        self.checkbox_1.grid(row=1, column=0, pady=20, padx=20, sticky="n")
-        # self.checkbox_2 = customtkinter.CTkCheckBox(
-        #     master=self.checkbox_slider_frame, text="Anki")
-        # self.checkbox_2.grid(row=2, column=0, pady=20, padx=20, sticky="n")
+        self.pleco_checkbox.grid(row=1, column=0, pady=20, padx=20, sticky="n")
+        self.excel_checkbox = customtkinter.CTkCheckBox(
+            master=self.checkbox_slider_frame, text="Excel")
+        self.excel_checkbox.grid(
+            row=2, column=0, pady=(0, 20), padx=20, sticky="n")
         self.sidebar_button_1 = customtkinter.CTkButton(
             self.checkbox_slider_frame, command=self.sidebar_button_event, text="Create File")
         self.sidebar_button_1.grid(row=5, column=0, padx=20, pady=10)
@@ -76,10 +77,12 @@ class App(customtkinter.CTk):
             self.sidebar_frame, command=self.clear_text_event, text="Clear Text", fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"))
         self.clear_button.grid(
             row=10, column=0, pady=(10, 20), padx=(30, 20), sticky="w")
+        self.see_files_button = customtkinter.CTkButton(
+            self.checkbox_slider_frame, command=self.see_file_event, text="Open Files")
+        self.see_files_button.grid(row=6, column=0, padx=20, pady=10)
 
         # set default values
         self.appearance_mode_optionemenu.set("System")
-        self.checkbox_1.select()
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -109,21 +112,23 @@ class App(customtkinter.CTk):
         input = self.textbox.get("1.0", 'end-1c')
         cat = self.entry.get()
         hazCom = input.find(', ')
-        if not self.checkbox_1.get():
+        if not self.pleco_checkbox.get() and not self.excel_checkbox.get():
             self.open_checkbox_error_event()
         elif input == "" or cat == "":
             self.open_textbox_error_event()
         else:
-            self.open_input_filename_event()
+            if self.pleco_checkbox.get():
+                self.open_input_filename_event()
             if hazCom == -1:
-                getTheWerdz(newLineSplit(input), file_name)
+                if self.pleco_checkbox.get() and self.excel_checkbox.get():
+                    getTheWerdz(newLineSplit(input), file_name)
+                    make_xls_worksheet(newLineSplit(input), cat)
+                elif self.pleco_checkbox.get():
+                    getTheWerdz(newLineSplit(input), file_name)
+                elif self.excel_checkbox.get():
+                    make_xls_worksheet(newLineSplit(input), cat)
             else:
                 getTheWerdz(zhengLongShuo(input), file_name)
-        if input != "":
-            if not hasattr(self, "sidebar_button_2"):
-                self.sidebar_button_2 = customtkinter.CTkButton(
-                    self.checkbox_slider_frame, command=self.see_file_event, text="See New File")
-                self.sidebar_button_2.grid(row=6, column=0, padx=20, pady=10)
 
     def see_file_event(self):
         if platform == 'linux' or platform == 'linux2':
