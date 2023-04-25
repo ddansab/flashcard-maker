@@ -21,6 +21,22 @@ def introStuff(fileName, categoryName):
         w = open('new_files/{}_pleco.txt'.format(fileName), 'w')
         w.write("//{}\n".format(categoryName))
 
+def ankiTime(werdz, file_name,catName):
+
+	f = open('new_files/{}_ankideck.txt'.format(file_name), 'a')
+	f.write("{}\n{}\n{}\n".format("#separator:tab","#html:false","#deck column:1"))
+ # data stuffs
+	for werd in werdz:
+
+	  transSF = werd.strip()
+	  transEN = translator.translate(transSF, dest='en')
+	  transLF = translator.translate(transSF, dest='zh-tw')
+	  transPY = translator.translate(transSF, dest='zh-cn')
+
+
+
+	  f.write("{}\t{}[{}]\t{}\t{}\n".format(catName, transSF, transLF.text, transPY.pronunciation, transEN.text))
+	f.close()
 
 def make_xls_worksheet(werdz, tab_name):
     filepath = 'new_files/yoyo_生词.xlsx'

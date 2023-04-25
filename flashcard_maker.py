@@ -7,9 +7,10 @@ import tkinter.messagebox
 import customtkinter
 import time
 
-from functions import getTheWerdz, introStuff, zhengLongShuo, newLineSplit, make_xls_worksheet
+from functions import getTheWerdz, introStuff, zhengLongShuo, newLineSplit, make_xls_worksheet, ankiTime
+# Dark mode or there is something wrong with you
 
-customtkinter.set_appearance_mode("System")
+customtkinter.set_appearance_mode("Dark")
 customtkinter.set_default_color_theme("green")
 
 
@@ -40,7 +41,7 @@ class App(customtkinter.CTk):
         self.appearance_mode_label = customtkinter.CTkLabel(
             self.sidebar_frame, text="UI Preference:", anchor="w")
         self.appearance_mode_label.grid(row=1, column=0, padx=20, pady=(10, 0))
-        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["Light", "Dark", "System"],
+        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["Light", "Dark", "System",],
                                                                        command=self.change_appearance_mode_event)
         self.appearance_mode_optionemenu.grid(
             row=2, column=0, padx=20, pady=(10, 10))
@@ -71,19 +72,23 @@ class App(customtkinter.CTk):
             master=self.checkbox_slider_frame, text="Excel")
         self.excel_checkbox.grid(
             row=2, column=0, pady=(0, 20), padx=10, sticky="n")
+        self.anki_checkbox = customtkinter.CTkCheckBox(
+            master=self.checkbox_slider_frame, text="Anki")
+        self.anki_checkbox.grid(
+            row=3, column=0, pady=(0, 20), padx=10, sticky="n")
         self.create_file_button = customtkinter.CTkButton(
             self.checkbox_slider_frame, command=self.sidebar_button_event, text="Create File")
-        self.create_file_button.grid(row=3, column=0, padx=20, pady=10)
+        self.create_file_button.grid(row=4, column=0, padx=20, pady=10)
         self.see_files_button = customtkinter.CTkButton(
             self.checkbox_slider_frame, command=self.see_file_event, text="Open Files")
-        self.see_files_button.grid(row=4, column=0, padx=20, pady=10)
+        self.see_files_button.grid(row=5, column=0, padx=20, pady=10)
         self.clear_button = customtkinter.CTkButton(
             self.sidebar_frame, command=self.clear_text_event, text="Clear Text", fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"))
         self.clear_button.grid(
             row=10, column=0, pady=(10, 20), padx=(30, 20), sticky="w")
 
         # set default values
-        self.appearance_mode_optionemenu.set("System")
+        self.appearance_mode_optionemenu.set("Dark")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -124,19 +129,34 @@ class App(customtkinter.CTk):
         input = self.textbox.get("1.0", 'end-1c')
         cat = self.entry.get()
         hazCom = input.find(', ')
-        if not self.pleco_checkbox.get() and not self.excel_checkbox.get():
+        if not self.pleco_checkbox.get() and not self.excel_checkbox.get() and not self.anki_checkbox.get():
             self.open_checkbox_error_event()
         elif input == "" or cat == "":
             self.open_textbox_error_event()
         else:
             if self.pleco_checkbox.get():
                 self.open_input_filename_event()
+            if self.anki_checkbox.get():
+                self.open_input_filename_event()
             if hazCom == -1:
-                if self.pleco_checkbox.get() and self.excel_checkbox.get():
+                if self.pleco_checkbox.get() and self.excel_checkbox.get() and self.anki_checkbox.get():
                     getTheWerdz(newLineSplit(input), file_name)
                     make_xls_worksheet(newLineSplit(input), cat)
+                    ankiTime(newLineSplit(input), file_name, cat)
+                elif self.pleco_checkbox.get() and self.excel_checkbox.get():
+                    getTheWerdz(newLineSplit(input), file_name)
+                    make_xls_worksheet(newLineSplit(input), cat)
+#this is unnecessarily complicated, you're welcome ;)
+                elif self.pleco_checkbox.get() and self.anki_checkbox.get():
+                    getTheWerdz(newLineSplit(input), file_name)
+                    ankiTime(newLineSplit(input), file_name, cat)
+                elif self.excel_checkbox.get() and self.anki_checkbox.get():
+                    make_xls_worksheet(newLineSplit(input), cat)
+                    ankiTime(newLineSplit(input), file_name, cat)
                 elif self.pleco_checkbox.get():
                     getTheWerdz(newLineSplit(input), file_name)
+                elif self.anki_checkbox.get():
+                    ankiTime(newLineSplit(input), file_name, cat)
                 elif self.excel_checkbox.get():
                     self.progressbar = customtkinter.CTkProgressBar(
                         self.checkbox_slider_frame, width=100)
