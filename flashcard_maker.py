@@ -96,18 +96,17 @@ class App(customtkinter.CTk):
         tkinter.messagebox.showerror(
             "ERROR", "Either your file is empty, or you need a category name.")
 
+    def open_filename_error_event(self):
+        tkinter.messagebox.showerror(
+            "ERROR", "You need a file name. Don't start with a number, and avoid special characers (both may cause problems down the road).")
+
     def clear_text_event(self):
         self.textbox.delete('1.0', 'end-1c')
         self.entry.delete(0, 'end')
 
     file_name = ""
 
-    def open_input_filename_event(self):
-        filename = customtkinter.CTkInputDialog(
-            text="Type your filename:", title="Filename")
-        global file_name
-        file_name = filename.get_input()
-        intro_stuff(file_name, self.entry.get())
+    def do_progress_bar(self):
         self.progressbar = customtkinter.CTkProgressBar(
             self.checkbox_slider_frame, width=100)
         self.progressbar.grid(row=5, column=0, padx=10,
@@ -119,6 +118,17 @@ class App(customtkinter.CTk):
             time.sleep(0.025)
         self.progressbar.grid_forget()
         self.see_files_button.configure(text="See New Files")
+
+    def open_input_filename_event(self):
+        filename = customtkinter.CTkInputDialog(
+            text="Type your filename:", title="Filename")
+        global file_name
+        file_name = filename.get_input()
+        if file_name == "":
+            self.open_filename_error_event()
+            file_name = filename.get_input()
+        else:
+            intro_stuff(file_name, self.entry.get())
 
     def sidebar_button_event(self):
         input = self.textbox.get("1.0", 'end-1c')
@@ -133,22 +143,14 @@ class App(customtkinter.CTk):
                 self.open_input_filename_event()
             if hazCom == -1:
                 if self.pleco_checkbox.get() and self.excel_checkbox.get():
+                    self.do_progress_bar()
                     get_the_werdz(new_line_split(input), file_name)
                     make_xls_worksheet(new_line_split(input), cat)
                 elif self.pleco_checkbox.get():
+                    self.do_progress_bar()
                     get_the_werdz(new_line_split(input), file_name)
                 elif self.excel_checkbox.get():
-                    self.progressbar = customtkinter.CTkProgressBar(
-                        self.checkbox_slider_frame, width=100)
-                    self.progressbar.grid(row=5, column=0, padx=10,
-                                          pady=30, sticky="ew")
-                    self.progressbar.set(0)
-                    for x in range(60):
-                        self.progressbar.update_idletasks()
-                        self.progressbar.set(x/60)
-                        time.sleep(0.025)
-                    self.progressbar.grid_forget()
-                    self.see_files_button.configure(text="See New Files")
+                    self.do_progress_bar()
                     make_xls_worksheet(new_line_split(input), cat)
             else:
                 get_the_werdz(zheng_long_shuo(input), file_name)
