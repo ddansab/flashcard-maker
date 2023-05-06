@@ -153,7 +153,16 @@ class App(customtkinter.CTk):
                     self.do_progress_bar()
                     make_xls_worksheet(new_line_split(input), cat)
             else:
-                get_the_werdz(zheng_long_shuo(input), file_name)
+                if self.pleco_checkbox.get() and self.excel_checkbox.get():
+                    self.do_progress_bar()
+                    get_the_werdz(zheng_long_shuo(input), file_name)
+                    make_xls_worksheet(zheng_long_shuo(input), cat)
+                elif self.pleco_checkbox.get():
+                    self.do_progress_bar()
+                    get_the_werdz(zheng_long_shuo(input), file_name)
+                elif self.excel_checkbox.get():
+                    self.do_progress_bar()
+                    make_xls_worksheet(zheng_long_shuo(input), cat)
 
     def see_file_event(self):
         if platform == 'linux' or platform == 'linux2':
