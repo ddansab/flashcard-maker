@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from googletrans import Translator
 import os
@@ -9,7 +9,7 @@ from openpyxl import Workbook, load_workbook
 translator = Translator()
 
 
-def introStuff(fileName, categoryName):
+def intro_stuff(fileName, categoryName):
     PATH = "new_files"
     if not os.path.exists(PATH):
         os.makedirs(PATH)
@@ -56,7 +56,7 @@ def make_xls_worksheet(werdz, tab_name):
     wb.save(filepath)
 
 
-def zhengLongShuo(werdz):
+def zheng_long_shuo(werdz):
     split = werdz.split(',')
     filtered_split = list(filter(None, split))
     return filtered_split
@@ -64,13 +64,13 @@ def zhengLongShuo(werdz):
 # 郑隆比周星大好得多。
 
 
-def newLineSplit(werdz):
+def new_line_split(werdz):
     split = werdz.split('\n')
     filtered_split = list(filter(None, split))
     return filtered_split
 
 
-def getTheWerdz(werdz, fName):
+def get_the_werdz(werdz, fName):
     for werd in werdz:
         transSF = werd.strip()
         transEN = translator.translate(transSF, dest='en')
